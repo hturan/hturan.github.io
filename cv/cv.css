@@ -78,7 +78,9 @@ section.system {
   position: relative;
   top: 20px;
   left: 50%;
+  transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
 }
 
 section.orbit {
@@ -87,9 +89,18 @@ section.orbit {
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+  animation-name: orbit;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
   -webkit-transform: translate(-50%, -50%);
+  -webkit-animation-name: orbit;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
+  -moz-transform: translate(-50%, -50%);
+  -moz-animation-name: orbit;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
 }
 
 section.orbits section.orbit:nth-of-type(1) {
@@ -119,7 +130,9 @@ img.avatar {
   left: 50%;
   width: 80px;
   height: 80px;
+  transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
   border-radius: 50px;
   -webkit-user-select: none;
 }
@@ -130,42 +143,30 @@ code.skill {
   top: 50%;
   left: 50%;
   z-index: 2;
-  -webkit-transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
 }
 
-@-webkit-keyframes orbit_1 {
+@keyframes orbit {
   from {
-    -webkit-transform: translate(-50%, -50%) rotate(0deg)
+    transform: translate(-50%, -50%) rotate(0deg)
   }
   to {
-    -webkit-transform: translate(-50%, -50%) rotate(360deg)
+    transform: translate(-50%, -50%) rotate(360deg)
   }
 }
-@-webkit-keyframes orbit_2 {
+
+@-moz-keyframes orbit {
   from {
-    -webkit-transform: translate(-50%, -50%) rotate(0deg)
+    -moz-transform: translate(-50%, -50%) rotate(0deg)
   }
   to {
-    -webkit-transform: translate(-50%, -50%) rotate(360deg)
+    -moz-transform: translate(-50%, -50%) rotate(360deg)
   }
 }
-@-webkit-keyframes orbit_3 {
-  from {
-    -webkit-transform: translate(-50%, -50%) rotate(0deg)
-  }
-  to {
-    -webkit-transform: translate(-50%, -50%) rotate(360deg)
-  }
-}
-@-webkit-keyframes orbit_4 {
-  from {
-    -webkit-transform: translate(-50%, -50%) rotate(0deg)
-  }
-  to {
-    -webkit-transform: translate(-50%, -50%) rotate(360deg)
-  }
-}
-@-webkit-keyframes orbit_5 {
+
+@-webkit-keyframes orbit {
   from {
     -webkit-transform: translate(-50%, -50%) rotate(0deg)
   }

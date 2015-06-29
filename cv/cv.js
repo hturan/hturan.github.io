@@ -41,7 +41,6 @@ for (var i = 0; i < skills.length; i += 1) {
   var orbit = $('<section class="orbit"></section>');
 
   orbit.css({
-    animationName: 'orbit_'+(i+1),
     animationDuration: (i * 5) + 15 +'s',
   });
 
