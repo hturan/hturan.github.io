@@ -1,15 +1,4 @@
 @font-face {
-  font-family: 'SF UI Text';
-  src: url('./fonts/sf-ui-text-bold-webfont.eot');
-  src: url('./fonts/sf-ui-text-bold-webfont.eot?#iefix') format('embedded-opentype'),
-       url('./fonts/sf-ui-text-bold-webfont.woff2') format('woff2'),
-       url('./fonts/sf-ui-text-bold-webfont.woff') format('woff'),
-       url('./fonts/sf-ui-text-bold-webfont.ttf') format('truetype'),
-       url('./fonts/sf-ui-text-bold-webfont.svg#sf_ui_textbold') format('svg');
-  font-weight: bold;
-}
-
-@font-face {
     font-family: 'SF UI Text';
     src: url('./fonts/sf-ui-text-medium.eot');
     src: url('./fonts/sf-ui-text-medium.eot?#iefix') format('embedded-opentype'),
