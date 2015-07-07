@@ -14,13 +14,30 @@
     font-family: 'Inconsolata', 'Menlo', 'Courier', monospace;
     position: relative;
     height: 100%;
+    font-size: 20px;
+  }
+
+  h1 {
+    font-weight: normal;
+    font-size: inherit;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 22px;
+    color: #F24E45;
+    border-bottom: 2px solid #F24E45;
   }
 
   section.container {
     position: relative;
+    text-align: middle;
+    vertical-align: middle;
     top: 50%;
+    transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
-    font-size: 20px;
+    -ms-transform: translateY(-50%);
     text-align: center;
     font-weight: 400;
     color: rgb(9, 11, 18);
@@ -28,30 +45,22 @@
     line-height: 30px;
   }
 
-  span.links {
-    display: block;
-    margin-top: 10px;
-    color: rgba(9, 11, 18, 0.4);
-  }
-
-  span.links a {
-    text-decoration: none;
-    font-size: 22px;
-    color: #F24E45;
-    border-bottom: 2px solid #F24E45;
-  }
-
-  a.twitter {
-
+  section.avatar {
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    background-position: -5px -3px;
+    background-image: url("http://www.gravatar.com/avatar/9b2ba8587f6b18d7ea0f2dc6648d6314.jpg?s=125");
+    background-repeat: none;
+    border-radius: 50%;
   }
   </style>
 </head>
 <body>
   <section class="container">
-    <span class="intro">Hi, I'm Harley.</span>
-    <span class="links">
-      Find me at <a class="twitter" href="https://twitter.com/hturan">Twitter</a> or <a class="github" href="https://github.com/hturan">GitHub</a>. Here's my <a href="/cv/">CV</a>.
-    </span>
+    <section class="avatar"></section>
+    <h1>Hi, I'm Harley.</h1>
+    <p>Find me at <a class="twitter" href="https://twitter.com/hturan">Twitter</a> or <a class="github" href="https://github.com/hturan">GitHub</a>. Here's my <a href="/cv/">CV</a>.</p>
   </section>
 </body>
 </html>
