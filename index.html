@@ -3,81 +3,238 @@
 <head>
   <title>Harley Turan</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
   <style type="text/css">
-  html, body {
+  body, html {
     margin: 0;
-    padding: 0;
-    font-family: 'Inconsolata', 'Menlo', 'Courier', monospace;
-    position: relative;
     height: 100%;
-    font-size: 20px;
+    width: 100%;
+    overflow: hidden;
   }
 
-  h1 {
-    font-weight: normal;
-    font-size: inherit;
-    margin: 10px 0;
+  body {
+    font-family: -apple-system, 'SF UI Text', Helvetica, Arial, sans-serif;
+    font-size: 18px;
   }
 
-  a {
-    text-decoration: none;
-    font-size: 22px;
-    color: #F24E45;
-    border-bottom: 2px solid #F24E45;
+  div#container {
+    position: relative;
+    border-width: 0;
+    border-style: solid;
+    border-color: #f2f2f2;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-width 0.8s;
+    overflow: auto;
+  }
+  div#container.loaded {
+    border-width: 35px;
   }
 
   p {
     margin: 0;
-    color: rgba(9, 11, 18, 0.4);
+    padding: 10px;
+    line-height: 28px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    transition-delay: 1s;
+  }
+  div#container.loaded p {
+    opacity: 1;
   }
 
-  section.container {
+  a {
+    text-decoration: none;
+    color: black;
+    border-bottom: 2px solid;
+  }
+
+  section.details {
     position: relative;
-    text-align: middle;
-    vertical-align: middle;
     top: 50%;
     transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
     text-align: center;
-    font-weight: 400;
-    color: rgb(9, 11, 18);
-    padding: 0 10px;
-    line-height: 30px;
   }
 
-  section.avatar {
-    width: 120px;
-    height: 120px;
-    display: inline-block;
-    background-position: -5px -3px;
-    background-image: url("http://www.gravatar.com/avatar/9b2ba8587f6b18d7ea0f2dc6648d6314.jpg?s=125");
-    background-repeat: none;
-    border-radius: 50%;
+  #canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s;
+    transition-delay: 1.5s;
+  }
+  div#container.loaded #canvas {
+    opacity: 1;
   }
   </style>
 </head>
 <body>
-  <section class="container">
-    <section class="avatar"></section>
-    <h1>Hi, I'm Harley.</h1>
-    <p>Find me at <a class="twitter" href="https://twitter.com/hturan">Twitter</a> or <a class="github" href="https://github.com/hturan">GitHub</a>. Here's my <a href="/cv/">CV</a>.</p>
-  </section>
-  
+  <div id="container">
+    <canvas id="canvas"></canvas>
+    <section class="details">
+      <p>Hi, I’m <strong>Harley</strong>.</p>
+      <p>You can find me at <a href="https://twitter.com/hturan">Twitter</a> or <a href="https://github.com/hturan">GitHub</a>. Here’s my <a href="/cv">CV</a>.</p>
+    </section>
+  </div>
+
+  <script type="text/javascript">
+  window.onload = function () {
+    setTimeout(function () {
+      document.getElementById('container').classList.add('loaded');
+      setTimeout(function () {
+        setup();
+      }, 800);
+     }, 300);
+  };
+
+  window.onresize = function () {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  };
+
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext('2d');
+  var container = document.getElementById('container');
+  var avatar = document.getElementById('avatar');
+
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+  var colors = [
+    '#94FFDE',
+    '#FFBCBC',
+    '#FDF37D',
+    '#FF5252'
+  ];
+  var color = colors[Math.floor(Math.random()*colors.length)];
+
+  // var gradients = [{
+  //   0: 'FF3737',
+  //   1: 'BC2A2A'
+  // }, {
+  //   0: '57c1eb',
+  //   1: '246fa8'
+  // }, {
+  //   0: '37FF96',
+  //   1: '2ABC4A'
+  // }, {
+  //   0: '47565f',
+  //   0.15: '5b625a',
+  //   0.38: '947461',
+  //   0.7: 'f98056',
+  //   1: 'f7ec86'
+  // }, {
+  //   0: 'ffe3c8',
+  //   0.45: 'efad9e',
+  //   0.65: 'c79797',
+  //   0.85: 'a78a92',
+  //   1: '857d8d'
+  // }];
+  // var gradient = gradients[Math.floor(Math.random()*gradients.length)];
+
+  var circles = [];
+
+  function Circle (x, y, vx, vy) {
+    this.x = x;
+    this.y = y;
+
+    this.vx = vx;
+    this.vy = vy;
+
+    this.radius = 10;
+
+    this.closestCircle = null;
+
+    this.render = function () {
+      // var gradientFill = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+
+      // for (var stop in gradient) {
+      //   gradientFill.addColorStop(stop, '#'+gradient[stop]);
+      // }
+
+      // ctx.fillStyle = gradientFill;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
+      ctx.fill();
+    }
+  }
+
+  function render () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // circles.forEach(function (circle) {
+    //   var closestDistance = 999999;
+
+    //   circles.forEach(function (currentCircle) {
+    //     if (circle !== currentCircle) {
+    //       var distance = Math.sqrt(Math.pow(circle.x - currentCircle.x, 2) + Math.pow(circle.y - currentCircle.y, 2));
+
+    //       if (distance < closestDistance) {
+    //         closestDistance = distance;
+    //         circle.closestCircle = currentCircle;
+    //       }
+    //     }
+    //   });
+
+    //   ctx.strokeStyle = "#f2f2f2";
+    //   ctx.lineWidth = "3";
+    //   ctx.beginPath();
+    //   ctx.moveTo(circle.x, circle.y);
+    //   ctx.lineTo(circle.closestCircle.x, circle.closestCircle.y);
+    //   ctx.stroke();
+    // });
+
+    circles.forEach(function (circle) {
+      circle.render();
+
+      if ((circle.x + circle.radius) > canvas.width || (circle.x - circle.radius) < 0) {
+        circle.vx *= -1;
+      }
+
+      if ((circle.y + circle.radius) > canvas.height || (circle.y - circle.radius) < 0) {
+        circle.vy *= -1;
+      }
+
+      // circle.vy += 0.1;
+
+      circle.x += circle.vx;
+      circle.y += circle.vy;
+    })
+
+    requestAnimationFrame(render);
+  }
+
+  function setup() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    for (var i = 0; i < Math.ceil((canvas.width*canvas.height)/50000); i++) {
+      circles.push(new Circle(
+        (Math.random()*(canvas.width - 30)) + 15,
+        (Math.random()*(canvas.height - 30)) + 15,
+        Math.random()*(Math.random() < 0.5 ? -1 : 1),
+        Math.random()*(Math.random() < 0.5 ? -1 : 1)
+      ));
+    }
+
+    render();
+  }
+  </script>
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
   ga('create', 'UA-64826677-1', 'auto');
   ga('send', 'pageview');
-
-</script>
+  </script>
 </body>
 </html>

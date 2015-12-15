@@ -8,11 +8,12 @@ var skills = [
     'Handlebars',
     'SASS',
     'Gulp',
-    'jQuery'
+    'jQuery',
+    'Redux'
   ],
   [
     'Rails',
-    'MySQL',
+    'MySQL/Postgres',
     'AWS (EC2, Lambda)',
     'Git',
     'Jasmine / Mocha'
