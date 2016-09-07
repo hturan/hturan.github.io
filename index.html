@@ -9,6 +9,7 @@
   <style type="text/css">
   body, html {
     margin: 0;
+    padding: 0;
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -17,33 +18,18 @@
   body {
     font-family: -apple-system, 'SF UI Text', Helvetica, Arial, sans-serif;
     font-size: 18px;
-  }
-
-  div#container {
     position: relative;
-    border-width: 0;
-    border-style: solid;
-    border-color: #f2f2f2;
-    background-color: white;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-width 0.8s;
-    overflow: auto;
-  }
-  div#container.loaded {
-    border-width: 35px;
+    background-color: #f2edec;
   }
 
   p {
-    margin: 0;
-    padding: 10px;
+    margin: 0 0 20px;
     line-height: 28px;
     opacity: 0;
     transition: opacity 0.5s;
     transition-delay: 1s;
   }
-  div#container.loaded p {
+  body.loaded p {
     opacity: 1;
   }
 
@@ -53,179 +39,159 @@
     border-bottom: 2px solid;
   }
 
-  section.details {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    text-align: center;
-  }
-
-  #canvas {
+  section#details {
     position: absolute;
+    width: 50%;
+    height: 100%;
     top: 0;
     left: 0;
-    width: 100%;
+    bottom: 0;
+    padding: 50px;
+    box-sizing: border-box;
+  }
+
+  canvas#canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
     height: 100%;
+    background-color: white;
     opacity: 0;
     transition: opacity 1.5s;
     transition-delay: 1.5s;
   }
-  div#container.loaded #canvas {
+
+  body.loaded canvas#canvas {
     opacity: 1;
+  }
+
+  @media(max-width: 800px) {
+    section#details {
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 50px 25px;
+    }
+    canvas#canvas {
+      width: 100%;
+      top: initial;
+    }
   }
   </style>
 </head>
-<body>
-  <div id="container">
-    <canvas id="canvas"></canvas>
-    <section class="details">
-      <p>Hi, I’m <strong>Harley</strong>.</p>
-      <p>You can find me at <a href="https://twitter.com/hturan">Twitter</a> or <a href="https://github.com/hturan">GitHub</a>. Here’s my <a href="/cv">CV</a>.</p>
-    </section>
-  </div>
+<body id="container">
+  <section id="details">
+    <p>Hi, I’m <strong>Harley</strong>. Nice to meet you!</p>
+    <p>You can usually find me at <a href="https://twitter.com/hturan">Twitter</a> or <a href="https://github.com/hturan">GitHub</a>.</p>
+    <p>I also update my <a href="/blog">blog</a>, occasionally.</p>
+    <p>If you're interested in what I do, here’s my <a href="/cv">CV</a>.</p>
+  </section>
+  <canvas id="canvas"></canvas>
 
   <script type="text/javascript">
-  window.onload = function () {
-    setTimeout(function () {
-      document.getElementById('container').classList.add('loaded');
+    window.onload = function () {
       setTimeout(function () {
-        setup();
-      }, 800);
-     }, 300);
-  };
+        // Kick off CSS animation
+        document.getElementById('container').classList.add('loaded');
 
-  window.onresize = function () {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  };
+        setTimeout(function () {
+          // Kick off canvas animation after CSS transition
+          setup();
+        }, 800);
+       }, 300);
+    };
 
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext('2d');
-  var container = document.getElementById('container');
-  var avatar = document.getElementById('avatar');
+    // Resize canvas on window resize
+    window.onresize = function () {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
 
-  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext('2d');
 
-  var colors = [
-    '#94FFDE',
-    '#FFBCBC',
-    '#FDF37D',
-    '#FF5252'
-  ];
-  var color = colors[Math.floor(Math.random()*colors.length)];
+    // Set up retina-ready canvas context
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 
-  // var gradients = [{
-  //   0: 'FF3737',
-  //   1: 'BC2A2A'
-  // }, {
-  //   0: '57c1eb',
-  //   1: '246fa8'
-  // }, {
-  //   0: '37FF96',
-  //   1: '2ABC4A'
-  // }, {
-  //   0: '47565f',
-  //   0.15: '5b625a',
-  //   0.38: '947461',
-  //   0.7: 'f98056',
-  //   1: 'f7ec86'
-  // }, {
-  //   0: 'ffe3c8',
-  //   0.45: 'efad9e',
-  //   0.65: 'c79797',
-  //   0.85: 'a78a92',
-  //   1: '857d8d'
-  // }];
-  // var gradient = gradients[Math.floor(Math.random()*gradients.length)];
+    var circleColor = "#FF5252";
+    var circleRadius = 10;
+    var circles = [];
 
-  var circles = [];
+    function render () {
+      // Clear canvas context
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  function Circle (x, y, vx, vy) {
-    this.x = x;
-    this.y = y;
+      // Draw lines between circles
+      // circles.forEach(function (circle) {
+      //   var closestDistance = 999999;
 
-    this.vx = vx;
-    this.vy = vy;
+      //   circles.forEach(function (currentCircle) {
+      //     if (circle !== currentCircle) {
+      //       var distance = Math.sqrt(Math.pow(circle.x - currentCircle.x, 2) + Math.pow(circle.y - currentCircle.y, 2));
 
-    this.radius = 10;
+      //       if (distance < closestDistance) {
+      //         closestDistance = distance;
+      //         circle.closestCircle = currentCircle;
+      //       }
+      //     }
+      //   });
 
-    this.closestCircle = null;
+      //   ctx.strokeStyle = "#f2edec";
+      //   ctx.lineWidth = "2";
+      //   ctx.beginPath();
+      //   ctx.moveTo(circle.x, circle.y);
+      //   ctx.lineTo(circle.closestCircle.x, circle.closestCircle.y);
+      //   ctx.stroke();
+      // });
 
-    this.render = function () {
-      // var gradientFill = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      // Mutate circle positions and render
+      circles.forEach(function (circle) {
+        // Collidion detection for sides
+        if ((circle.x + circle.radius) > canvas.width || (circle.x - circle.radius) < 0) {
+          circle.vx *= -1;
+        }
+        if ((circle.y + circle.radius) > canvas.height || (circle.y - circle.radius) < 0) {
+          circle.vy *= -1;
+        }
 
-      // for (var stop in gradient) {
-      //   gradientFill.addColorStop(stop, '#'+gradient[stop]);
-      // }
+        // Update position based on velocity
+        circle.x += circle.vx;
+        circle.y += circle.vy;
 
-      // ctx.fillStyle = gradientFill;
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
-      ctx.fill();
-    }
-  }
+        // Render the circle
+        ctx.fillStyle = circleColor;
+        ctx.beginPath();
+        ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2, true);
+        ctx.fill();
+      })
 
-  function render () {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // circles.forEach(function (circle) {
-    //   var closestDistance = 999999;
-
-    //   circles.forEach(function (currentCircle) {
-    //     if (circle !== currentCircle) {
-    //       var distance = Math.sqrt(Math.pow(circle.x - currentCircle.x, 2) + Math.pow(circle.y - currentCircle.y, 2));
-
-    //       if (distance < closestDistance) {
-    //         closestDistance = distance;
-    //         circle.closestCircle = currentCircle;
-    //       }
-    //     }
-    //   });
-
-    //   ctx.strokeStyle = "#f2f2f2";
-    //   ctx.lineWidth = "3";
-    //   ctx.beginPath();
-    //   ctx.moveTo(circle.x, circle.y);
-    //   ctx.lineTo(circle.closestCircle.x, circle.closestCircle.y);
-    //   ctx.stroke();
-    // });
-
-    circles.forEach(function (circle) {
-      circle.render();
-
-      if ((circle.x + circle.radius) > canvas.width || (circle.x - circle.radius) < 0) {
-        circle.vx *= -1;
-      }
-
-      if ((circle.y + circle.radius) > canvas.height || (circle.y - circle.radius) < 0) {
-        circle.vy *= -1;
-      }
-
-      // circle.vy += 0.1;
-
-      circle.x += circle.vx;
-      circle.y += circle.vy;
-    })
-
-    requestAnimationFrame(render);
-  }
-
-  function setup() {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    for (var i = 0; i < Math.ceil((canvas.width*canvas.height)/50000); i++) {
-      circles.push(new Circle(
-        (Math.random()*(canvas.width - 30)) + 15,
-        (Math.random()*(canvas.height - 30)) + 15,
-        Math.random()*(Math.random() < 0.5 ? -1 : 1),
-        Math.random()*(Math.random() < 0.5 ? -1 : 1)
-      ));
+      // Set up next available render
+      // TODO: Polyfill
+      window.requestAnimationFrame(render);
     }
 
-    render();
-  }
+    function setup() {
+      // Configure canvas dinemsions
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      // Create circles depending on available real estate
+      for (var i = 0; i < Math.ceil((canvas.width * canvas.height) / 40000); i++) {
+        circles.push({
+          x: (Math.random() * (canvas.width - 30)) + 15,
+          y: (Math.random() * (canvas.height - 30)) + 15,
+          vx: Math.random() * (Math.random() < 0.5 ? -1 : 1),
+          vy: Math.random() * (Math.random() < 0.5 ? -1 : 1),
+          radius: circleRadius
+        });
+      }
+
+      // Kick off render cycle
+      render();
+    }
   </script>
 
   <script>
