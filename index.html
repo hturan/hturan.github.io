@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Harley Turan</title>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-
-  <style type="text/css">
-  body, html {
-    margin: 0;
-    padding: 0;
+---
+---
+<style type="text/css">
+  html, body {
     height: 100%;
-    width: 100%;
-    overflow: hidden;
   }
 
   body {
-    font-family: -apple-system, 'SF UI Text', Helvetica, Arial, sans-serif;
+    overflow: hidden;
     font-size: 18px;
     position: relative;
     background-color: #f2edec;
@@ -38,6 +28,10 @@
     color: black;
     border-bottom: 2px solid;
   }
+  a:hover {
+    color: #FF5252;
+    border-color: #FF5252;
+  }
 
   section#details {
     position: absolute;
@@ -48,6 +42,7 @@
     bottom: 0;
     padding: 50px;
     box-sizing: border-box;
+    -webkit-font-smoothing: initial;
   }
 
   canvas#canvas {
@@ -69,7 +64,11 @@
 
   @media(max-width: 800px) {
     section#details {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
       width: 100%;
+      height: auto;
       position: relative;
       z-index: 1;
       text-align: center;
@@ -78,129 +77,119 @@
     canvas#canvas {
       width: 100%;
       top: initial;
+      filter: blur(10px);
     }
   }
-  </style>
-</head>
-<body id="container">
-  <section id="details">
-    <p>Hi, I’m <strong>Harley</strong>. Nice to meet you!</p>
-    <p>You can usually find me at <a href="https://twitter.com/hturan">Twitter</a> or <a href="https://github.com/hturan">GitHub</a>.</p>
-    <p>I also update my <a href="/blog">blog</a>, occasionally.</p>
-    <p>If you're interested in what I do, here’s my <a href="/cv">CV</a>.</p>
-  </section>
-  <canvas id="canvas"></canvas>
+</style>
 
-  <script type="text/javascript">
-    window.onload = function () {
+<section id="details">
+  <p>Hi, I’m <strong>Harley</strong>. Nice to meet you!</p>
+  <p>You can usually find me at <a href="https://twitter.com/hturan">Twitter</a> or <a href="https://github.com/hturan">GitHub</a>.</p>
+  <p>I also update my <a href="/blog">blog</a>, occasionally.</p>
+  <p>If you're interested in what I do, here’s my <a href="/cv">CV</a>.</p>
+  <p>Have a great day! <span class="emoji">✌️</span></p>
+</section>
+<canvas id="canvas"></canvas>
+
+<script type="text/javascript">
+  window.onload = function () {
+    setTimeout(function () {
+      // Kick off CSS animation
+      document.body.classList.add('loaded');
+
       setTimeout(function () {
-        // Kick off CSS animation
-        document.getElementById('container').classList.add('loaded');
+        // Kick off canvas animation after CSS transition
+        setup();
+      }, 800);
+     }, 300);
+  };
 
-        setTimeout(function () {
-          // Kick off canvas animation after CSS transition
-          setup();
-        }, 800);
-       }, 300);
-    };
+  // Resize canvas on window resize
+  window.onresize = function () {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  };
 
-    // Resize canvas on window resize
-    window.onresize = function () {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext('2d');
 
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext('2d');
+  // Set up retina-ready canvas context
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 
-    // Set up retina-ready canvas context
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  var circleColor = "#FF5252";
+  var circleRadius = 10;
+  var circles = [];
 
-    var circleColor = "#FF5252";
-    var circleRadius = 10;
-    var circles = [];
+  function render () {
+    // Clear canvas context
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    function render () {
-      // Clear canvas context
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Draw lines between circles
+    // circles.forEach(function (circle) {
+    //   var closestDistance = 999999;
 
-      // Draw lines between circles
-      // circles.forEach(function (circle) {
-      //   var closestDistance = 999999;
+    //   circles.forEach(function (currentCircle) {
+    //     if (circle !== currentCircle) {
+    //       var distance = Math.sqrt(Math.pow(circle.x - currentCircle.x, 2) + Math.pow(circle.y - currentCircle.y, 2));
 
-      //   circles.forEach(function (currentCircle) {
-      //     if (circle !== currentCircle) {
-      //       var distance = Math.sqrt(Math.pow(circle.x - currentCircle.x, 2) + Math.pow(circle.y - currentCircle.y, 2));
+    //       if (distance < closestDistance) {
+    //         closestDistance = distance;
+    //         circle.closestCircle = currentCircle;
+    //       }
+    //     }
+    //   });
 
-      //       if (distance < closestDistance) {
-      //         closestDistance = distance;
-      //         circle.closestCircle = currentCircle;
-      //       }
-      //     }
-      //   });
+    //   ctx.strokeStyle = "#f2edec";
+    //   ctx.lineWidth = "2";
+    //   ctx.beginPath();
+    //   ctx.moveTo(circle.x, circle.y);
+    //   ctx.lineTo(circle.closestCircle.x, circle.closestCircle.y);
+    //   ctx.stroke();
+    // });
 
-      //   ctx.strokeStyle = "#f2edec";
-      //   ctx.lineWidth = "2";
-      //   ctx.beginPath();
-      //   ctx.moveTo(circle.x, circle.y);
-      //   ctx.lineTo(circle.closestCircle.x, circle.closestCircle.y);
-      //   ctx.stroke();
-      // });
-
-      // Mutate circle positions and render
-      circles.forEach(function (circle) {
-        // Collidion detection for sides
-        if ((circle.x + circle.radius) > canvas.width || (circle.x - circle.radius) < 0) {
-          circle.vx *= -1;
-        }
-        if ((circle.y + circle.radius) > canvas.height || (circle.y - circle.radius) < 0) {
-          circle.vy *= -1;
-        }
-
-        // Update position based on velocity
-        circle.x += circle.vx;
-        circle.y += circle.vy;
-
-        // Render the circle
-        ctx.fillStyle = circleColor;
-        ctx.beginPath();
-        ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2, true);
-        ctx.fill();
-      })
-
-      // Set up next available render
-      // TODO: Polyfill
-      window.requestAnimationFrame(render);
-    }
-
-    function setup() {
-      // Configure canvas dinemsions
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-
-      // Create circles depending on available real estate
-      for (var i = 0; i < Math.ceil((canvas.width * canvas.height) / 40000); i++) {
-        circles.push({
-          x: (Math.random() * (canvas.width - 30)) + 15,
-          y: (Math.random() * (canvas.height - 30)) + 15,
-          vx: Math.random() * (Math.random() < 0.5 ? -1 : 1),
-          vy: Math.random() * (Math.random() < 0.5 ? -1 : 1),
-          radius: circleRadius
-        });
+    // Mutate circle positions and render
+    circles.forEach(function (circle) {
+      // Collidion detection for sides
+      if ((circle.x + circle.radius) > canvas.width || (circle.x - circle.radius) < 0) {
+        circle.vx *= -1;
+      }
+      if ((circle.y + circle.radius) > canvas.height || (circle.y - circle.radius) < 0) {
+        circle.vy *= -1;
       }
 
-      // Kick off render cycle
-      render();
-    }
-  </script>
+      // Update position based on velocity
+      circle.x += circle.vx;
+      circle.y += circle.vy;
 
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-64826677-1', 'auto');
-  ga('send', 'pageview');
-  </script>
-</body>
-</html>
+      // Render the circle
+      ctx.fillStyle = circleColor;
+      ctx.beginPath();
+      ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2, true);
+      ctx.fill();
+    })
+
+    // Set up next available render
+    // TODO: Polyfill
+    window.requestAnimationFrame(render);
+  }
+
+  function setup() {
+    // Configure canvas dinemsions
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    // Create circles depending on available real estate
+    for (var i = 0; i < Math.ceil((canvas.width * canvas.height) / 3000); i++) {
+      circles.push({
+        x: (Math.random() * (canvas.width - 30)) + 15,
+        y: (Math.random() * (canvas.height - 30)) + 15,
+        vx: Math.random() * (Math.random() < 0.5 ? -1 : 1),
+        vy: Math.random() * (Math.random() < 0.5 ? -1 : 1),
+        radius: Math.random() * 10
+      });
+    }
+
+    // Kick off render cycle
+    render();
+  }
+</script>
