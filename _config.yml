@@ -4,12 +4,9 @@ baseurl: /
 domain_name: 'https://hturan.com'
 google_analytics: 'UA-64826677-1'
 
-# Details for the RSS feed generator
-url:            'http://hturan.com'
-author:         'Harley Turan'
-authorTwitter:  'hturan'
+show_drafts: true
 
-permalink:       /blog/:title/
+permalink: /blog/:title/
 
 defaults:
     -

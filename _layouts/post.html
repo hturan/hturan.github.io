@@ -1,0 +1,50 @@
+---
+layout: default
+---
+
+<style type="text/css">
+  main#blog-post {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 25px 15px;
+    box-sizing: border-box;
+  }
+
+  article.post {
+    font-size: 15px;
+  }
+
+  p, pre, li {
+    line-height: 22px;
+    margin-bottom: 15px;
+  }
+
+  p > a:hover {
+    color: rgb(205, 115, 111);
+    border-color: rgb(205, 115, 111);
+  }
+
+  h2, h3, h4, h5 {
+    font-weight: normal;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin: 35px 0 10px;
+  }
+  h3 {
+    font-size: 18px;
+  }
+</style>
+
+<main id="blog-post">
+  <article class="post">
+    {% include blog-post-title.html post=page %}
+    <section id="post-body">
+      {{content}}
+    </section>
+  </article>
+</main>
+
+
+

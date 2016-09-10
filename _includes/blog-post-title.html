@@ -1,0 +1,7 @@
+<section class="blog-post-title {% if include.post.draft %}draft{% endif %}">
+  {% unless include.post.draft %}<a href="{{ include.post.url }}">{% endunless %}
+  <h1 class="post-title">{{ include.post.title }}</h1>
+  {% unless include.post.draft %}</a>{% endunless %}
+
+  <span class="date">{% if include.post.draft %}Coming soon{% else %}{{ include.post.date | date:"%B %-d, %Y" }}{% endif %}</span>
+</section>

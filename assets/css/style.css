@@ -5,6 +5,7 @@
 
 html, body {
 	font-family: -apple-system, BlinkMacSystemFont, 'SF UI Text', Helvetica, Arial, sans-serif;
+	height: 100%;
 }
 
 span.emoji {
@@ -13,12 +14,43 @@ span.emoji {
 	vertical-align: middle;
 }
 
+
 a {
-	-webkit-transition: all 0.35s ease;
-	-moz-transition: all 0.35s ease;
-	-ms-transition: all 0.35s ease;
-	-o-transition: all 0.35s ease;
-	transition: all 0.35s ease;
+	color: inherit;
+	text-decoration: none;
+  border-bottom: 2px solid;
+	-webkit-transition: color 0.35s, border-color 0.35s;
+	-moz-transition: color 0.35s, border-color 0.35s;
+	-ms-transition: color 0.35s, border-color 0.35s;
+	-o-transition: color 0.35s, border-color 0.35s;
+	transition: color 0.35s, border-color 0.35s;
+}
+
+a:visited {
+	color: inherit;
+}
+
+section.blog-post-title {
+	padding: 20px 0;
+}
+
+section.blog-post-title span.date {
+	color: rgba(0,0,0,0.3);
+	font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+
+section.blog-post-title h1.post-title {
+  font-size: 28px;
+  font-weight: normal;
+  text-decoration: none;
+  color: rgba(0,0,0,0.8);
+}
+
+section.blog-post-title.draft {
+  opacity: 0.3;
 }
 
 code {
@@ -52,4 +84,11 @@ img {
 	left: calc(50% - 50vw);
 	display: block;
 	margin: 30px 0;
+}
+
+hr {
+	height: 0px;
+	border: none;
+	border-top: 2px solid rgba(0,0,0,0.1);
+	margin: 20px 0;	
 }

@@ -1,0 +1,24 @@
+---
+title: Blog
+---
+<style type="text/css">
+  main#blog-post-list {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 25px 15px;
+    box-sizing: border-box;
+  }
+
+  section.blog-post-title {
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+  }
+  section.blog-post-title:last-child {
+    border-bottom: none;
+  }
+</style>
+
+<main id="blog-post-list">
+  {% for post in site.posts %}
+    {% include blog-post-title.html post=post %}
+  {% endfor %}
+</main>
