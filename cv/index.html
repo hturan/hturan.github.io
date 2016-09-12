@@ -1,3 +1,6 @@
+---
+layout: nil
+---
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +17,7 @@
 <body>
   <header>
     <section class="system">
-      <img class="avatar" src="../assets/images/avatar.jpg">
+      <img class="avatar" src="{{site_url}}/assets/images/cv/avatar.jpg">
 
       <section class="orbits"></section>
     </section>
@@ -36,9 +39,20 @@
 
       <section class="summary">
         <h2>Summary</h2>
-        <p>I'm a developer that loves to work creatively. My strengths lie in working closely with designers to implement pixel-perfect user experiences. I have experience developing and designing for both web and native platforms, alongside back-end API and database work.</p>
+        <p>I'm a developer that loves to work creatively. My strengths lie in working closely with product designers to implement pixel-perfect user experiences. I have experience developing and designing for both web and native platforms, alongside back-end API and database implementation.</p>
 
         <h2>Employment</h2>
+        <h3>MyOnlineSchool <span class="job_title">Full-stack Developer / Lead Designer</span> <span class="dates">November 2015 - Present</span></h3>
+        <p>MyOnlineSchool approached me with the proposition of building an unparalleled online classroom from scratch. Their existing platform, a custom PHP/WordPress hybrid, was being stretched to its limits and needed a complete rewrite. Having the oppourtunity to build the technology stack from scratch meant that we could use cutting-edge technology to reduce development overhead and integrate design guidelines using component-based development.</p>
+        <p>The application was rewritten using server-side rendered <code>React</code>, with <code>Redux</code> for state management and <code>React Router</code> for client and server-side route matching. Since we were starting the project from scratch, we were able to utilise <code>ES2015</code> syntax improvements with the help of <code>Babel</code> for transpiling and <code>Webpack</code> for bundling. On the API side, we utilised <code>Rails</code> and <code>Postgres</code> for rock-solid performance and familiarity. Each of these choices turned out to be invaluable, as they allowed us to move at an unprecendented pace and are validated by now being considered the foundation for a modern front-end web application.</p>
+        <p>Some of my proudest work was in implementing SEO on the client side, as it involved a number of challenges that had yet to be faced in the world of <code>Redux</code>, <code>React</code> and <code>React Router</code>. My solution was to use an  <code>Express</code> application that utilises <code>Promises</code> to hydrate the client-side state before sending a response from the web-server, which is now the reccommended procedure for server-side data fetching and rendering.</p>
+        <p>I've always been fascinated by the designer/developer relationship, and being fortunate enough to lead both front-end development and product design let me reflect on past scenarios and realise how important solid guidelines are. Component-based design and development transforms the entire process and has changed both product design and development for the better.</p>
+
+        <h3>Photocrowd <span class="job_title">Developer</span> <span class="dates">July 2015 - November 2015</span></h3>
+        <p>Whilst only at Photocrowd for a short time, I worked closely with lead developer Marc Tamlyn to strengthen the front-end infrastructure, including introducing <code>React</code> into the existing <code>Django</code>-powered website. A large focus was placed on building a developer-friendly front-end environment.</p>
+        <p>I'm proud of the work I did building intricate photo thumbnail layouts, intelligent image auto-loading and fully responsive image viewers. I was also responsible for improving browser performance, which involved analysing JavaScript memory heap dumps and removing unnecessary render calls.  My in-depth profiling paid off with a doubling of framerate in certain areas, including going from <a target="_blank" href="{{site_url}}/assets/images/cv/photocrowd-1.png">30</a> to a stable <a target="_blank" href="{{site_url}}/assets/images/cv/photocrowd-2.png">60</a> frames per second on a dynamically-loaded feed of images.</p>
+        <p>As Photocrowd continues to grow, I stay in touch and help with any mobile app development and <code>React Native</code> questions that the team has.</p>
+
         <h3>Journl <span class="job_title">Web Developer</span> <span class="dates">February 2013 - June 2015</span></h3>
         <p>As part of a small development team, we built an intricate and comprehensive life organisation tool consisting of calendars, to-dos, lists, notes and file storage, on both the web and iOS. Doing so allowed me to build on a huge number of skills; everything from managing AWS EC2 instances to prototyping feature ideas with the latest front-end technologies. Some of my accomplishments include:</p>
         <ul>
@@ -67,11 +81,11 @@
         <p><strong>Magdalen College School (GCSE)</strong> — 4 A*, 6 A</p>
 
         <h2>References</h2>
-        <blockquote>Harley is an extremely talented developer. During his two years with me he started with a broad understanding of Javascript and in a small amount of time took ownership of a custom Javascript framework, developed all of our build tools, built native apps and managed our AWS infrastructure. He is thorough, extremely hard working and motivates and influences his co-workers through his natural ability to interpret problems and clearly explain solutions.</blockquote>
-        <cite>Daniel Rosewarne, CTO at <strong>Journl</strong></cite>
+        <blockquote>Harley worked with Photocrowd during 2015, and was a very valued member of the team. He’s bright, focused, personable and up-to-date with his knowledge of many dev technologies. I’d happily have him working again at Photocrowd, and would recommend him to others.</blockquote>
+        <cite>Mike Betts, CEO and Co-founder at <strong>Photocrowd</strong></cite>
 
-        <blockquote>Harley was the work horse of Oxford Websites. He focused on the design of the websites, their functionality and then did the majority of the building. He was an ideal business partner and worked diligently to make sure every pixel was perfect.</blockquote>
-        <cite>George Brooks, Current Owner at <strong>Oxford Websites</strong></cite>
+        <blockquote>Harley is an extremely talented developer. During his two years with me he started with a broad understanding of Javascript and in a small amount of time took ownership of a custom Javascript framework, developed all of our build tools, built native apps and managed our AWS infrastructure. He is thorough, extremely hard working and motivates and influences his co-workers through his natural ability to interpret problems and clearly explain solutions.</blockquote>
+        <cite>Daniel Rosewarne, CTO at <strong>Journl</strong> and <strong>MyOnlineSchool</strong></cite>
       </section>
     </section>
   </section>

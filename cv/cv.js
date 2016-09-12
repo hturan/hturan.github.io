@@ -2,14 +2,15 @@ var skills = [
   [
     'React',
     'ES6+',
-    'Node.js'
+    'Node.js',
+    'Redux'
   ],
   [
-    'Handlebars',
+    'CSS Modules',
     'SASS',
     'Gulp',
     'jQuery',
-    'Redux'
+    'HTML5 APIs'
   ],
   [
     'Rails',
@@ -20,17 +21,18 @@ var skills = [
   ],
   [
     'Sketch',
-    'Photoshop',
-    'Illustrator',
+    'Adobe Creative Suite',
     'Cinema4D',
     'WebGL',
     'D3.js'
   ],
   [
     'React Native',
+    'Phonegap / Cordova',
     'Objective-C',
-    'Xcode',
-    'Phonegap / Cordova'
+    'Swift',
+    'SceneKit / SpriteKit',
+    'Xcode'
   ]
 ];
 
@@ -60,8 +62,8 @@ for (var i = 0; i < skills.length; i += 1) {
 
   orbitsContainer.append(orbit);
 
-  // arctext only works in the DOM
+  // arctext only works whilst in the DOM
   orbitsContainer.find('code.skill').each(function () {
-    $(this).arctext({radius: (60 * i)+80});
+    $(this).arctext({radius: (60 * i) + 60});
   });
 }
